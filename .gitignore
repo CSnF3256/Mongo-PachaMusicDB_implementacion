@@ -1,0 +1,45 @@
+﻿# =========================
+# Python / Django
+# =========================
+__pycache__/
+*.py[cod]
+*.class
+*.pyo
+*.pyd
+
+# Entornos virtuales
+venv/
+env/
+.venv/
+
+# Base interna local de Django
+db.sqlite3
+django_internal.sqlite3
+*.sqlite3
+
+# Archivos generados
+staticfiles/
+media/
+
+# =========================
+# Configuración sensible
+# =========================
+config.json
+.env
+
+# =========================
+# VS Code / IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Sistema operativo
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs
+# =========================
+*.log

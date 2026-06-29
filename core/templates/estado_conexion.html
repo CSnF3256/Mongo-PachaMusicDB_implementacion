@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block topbar %}Conexión a MongoDB{% endblock %}
+{% block content %}
+<div class="page-header"><div><h2>Estado de conexión</h2><div class="hint">Evidencia para capturas de la Fase 7</div></div></div>
+<div class="card">
+  <h3>{% if ok %}🟢 Conexión exitosa{% else %}🔴 Error de conexión{% endif %}</h3>
+  <p><strong>URI:</strong> <span class="mono">{{ config.mongodb_uri }}</span></p>
+  <p><strong>Base:</strong> <span class="mono">{{ config.mongodb_database }}</span></p>
+  {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+</div>
+<div class="card"><h3>Colecciones detectadas</h3><div style="display:flex;gap:8px;flex-wrap:wrap">{% for c in collections %}<span class="badge">{{ c }}</span>{% empty %}<span class="hint">No hay colecciones todavía.</span>{% endfor %}</div></div>
+<div class="card"><h3>Índices creados / detectados</h3><div class="code">{{ indexes }}</div></div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login · PachaMusicDB MongoDB</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+<body class="login-body">
+  <div class="card login-card">
+    <div class="logo">
+      <div class="logo-title">♫ PachaMusicDB</div>
+      <div class="hint">Implementación web conectada únicamente a MongoDB</div>
+    </div>
+    {% if messages %}
+      {% for message in messages %}<div class="alert {% if message.tags == 'error' %}error{% endif %}">{{ message }}</div>{% endfor %}
+    {% endif %}
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group"><label>Usuario</label><input name="username" placeholder="admin" required autofocus></div><br>
+      <div class="form-group"><label>Contraseña</label><input name="password" type="password" placeholder="admin2026" required></div><br>
+      <button class="btn" type="submit" style="width:100%;justify-content:center">Ingresar</button>
+    </form>
+    <div class="card" style="margin-top:18px;background:#0b1f17">
+      <div class="stat-label">Credenciales de prueba</div>
+      <p class="mono">admin / admin2026<br>editor / editor2026<br>viewer / viewer2026</p>
+    </div>
+  </div>
+</body>
+</html>

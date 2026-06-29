@@ -1,0 +1,5 @@
+﻿{
+  "mongodb_uri": "mongodb+srv://USUARIO:CONTRASENA@TU_CLUSTER.mongodb.net/?retryWrites=true&w=majority",
+  "mongodb_database": "PachaMusicDB",
+  "mongodb_timeout_ms": 5000
+}

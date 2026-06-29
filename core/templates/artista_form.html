@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block topbar %}{{ accion }} artista{% endblock %}
+{% block content %}
+<div class="page-header"><div><h2>{{ accion }} artista</h2><div class="hint">CRUD sobre colección <span class="mono">artistas</span></div></div><a class="btn secondary" href="{% url 'artistas' %}">← Volver</a></div>
+<div class="card"><form method="post">{% csrf_token %}<div class="form-grid"><div class="form-group"><label>Nombre *</label><input name="nombre_artista" value="{{ item.nombre_artista|default:'' }}" required></div><div class="form-group"><label>País</label><input name="pais_artista" value="{{ item.pais_artista|default:'' }}"></div><div class="form-group"><label>Estado</label><select name="estado"><option value="Activo" {% if item.estado == 'Activo' %}selected{% endif %}>Activo</option><option value="Inactivo" {% if item.estado == 'Inactivo' %}selected{% endif %}>Inactivo</option></select></div><div class="form-group"><label>Discográfica</label><input name="discografica" value="{{ item.discografica.nombre_discografica|default:'' }}"></div><div class="form-group form-full"><label>Descripción</label><textarea name="descripcion_artista" rows="4">{{ item.descripcion_artista|default:'' }}</textarea></div></div><br><button class="btn">Guardar en MongoDB</button> <a class="btn secondary" href="{% url 'artistas' %}">Cancelar</a></form></div>
+{% endblock %}

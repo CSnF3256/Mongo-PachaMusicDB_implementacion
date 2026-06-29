@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard MongoDB{% endblock %}
+{% block topbar %}Dashboard de MongoDB{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div><h2>Panel principal</h2><div class="hint">Base conectada: <strong>{{ mongo_db }}</strong> · URI: <span class="mono">{{ mongo_uri }}</span></div></div>
+</div>
+{% if not conexion_ok %}
+  <div class="alert error">No se pudo conectar a MongoDB: {{ error }}. Revisa que MongoDB Compass/Server esté activo y que config.json use la URI correcta.</div>
+{% else %}
+<div class="stats">
+  <div class="stat"><div class="stat-label">Usuarios</div><div class="stat-value">{{ total_usuarios }}</div></div>
+  <div class="stat"><div class="stat-label">Artistas</div><div class="stat-value">{{ total_artistas }}</div></div>
+  <div class="stat"><div class="stat-label">Álbumes</div><div class="stat-value">{{ total_albumes }}</div></div>
+  <div class="stat"><div class="stat-label">Canciones</div><div class="stat-value">{{ total_canciones }}</div></div>
+  <div class="stat"><div class="stat-label">Playlists</div><div class="stat-value">{{ total_playlists }}</div></div>
+  <div class="stat"><div class="stat-label">Ventas</div><div class="stat-value">{{ total_ventas }}</div></div>
+</div>
+<div class="grid-2">
+  <div class="card"><h3>Top canciones por reproducciones</h3><div class="table-wrap"><table><thead><tr><th>Canción</th><th>Reproducciones</th><th>Likes</th></tr></thead><tbody>{% for c in top_canciones %}<tr><td>{{ c.titulo_cancion }}</td><td class="mono">{{ c.reproducciones_totales|default:0 }}</td><td class="mono">{{ c.likes_totales|default:0 }}</td></tr>{% empty %}<tr><td colspan="3">Sin datos cargados.</td></tr>{% endfor %}</tbody></table></div></div>
+  <div class="card"><h3>Usuarios Premium</h3><div class="table-wrap"><table><thead><tr><th>Usuario</th><th>Email</th><th>País</th></tr></thead><tbody>{% for u in usuarios_premium %}<tr><td>{{ u.nombre_usuario }}</td><td>{{ u.email_usuario }}</td><td>{{ u.pais_usuario }}</td></tr>{% empty %}<tr><td colspan="3">Sin usuarios Premium.</td></tr>{% endfor %}</tbody></table></div></div>
+</div>
+<div class="grid-2">
+  <div class="card"><h3>Usuarios por tipo</h3>{% for t in dist_tipos %}<p><span class="badge">{{ t.label }}</span> <span class="mono">{{ t.total }} documento(s)</span></p>{% empty %}<p class="hint">Sin datos.</p>{% endfor %}</div>
+  <div class="card"><h3>Canciones por estado</h3>{% for e in dist_estados %}<p><span class="badge yellow">{{ e.label }}</span> <span class="mono">{{ e.total }} documento(s)</span></p>{% empty %}<p class="hint">Sin datos.</p>{% endfor %}</div>
+</div>
+{% endif %}
+{% endblock %}

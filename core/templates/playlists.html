@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block topbar %}Playlists MongoDB{% endblock %}
+{% block content %}
+<div class="page-header"><div><h2>Playlists</h2><div class="hint">Colección <span class="mono">playlists</span> con canciones embebidas · {{ total }} documento(s)</div></div></div>
+<div class="card"><form class="filters" method="get" style="grid-template-columns:2fr auto auto"><div class="form-group"><label>Buscar</label><input name="q" value="{{ q }}" placeholder="Nombre de playlist"></div><button class="btn">Filtrar</button><a class="btn secondary" href="{% url 'playlists' %}">Limpiar</a></form></div>
+<div class="grid-2">{% for p in playlists %}<div class="card"><h3>{{ p.nombre_playlist }}</h3><p class="hint">Usuario: {{ p.usuario.nombre_usuario|default:'—' }} · Tipo: {{ p.tipo_playlist|default:'Privada' }}</p><p><span class="badge">{{ p.estado|default:'Activa' }}</span> <span class="mono">{{ p.canciones|length }} canción(es)</span></p><div class="table-wrap"><table><thead><tr><th>Canción embebida</th><th>Artista</th></tr></thead><tbody>{% for c in p.canciones %}<tr><td>{{ c.titulo_cancion }}</td><td>{{ c.nombre_artista|default:'—' }}</td></tr>{% empty %}<tr><td colspan="2">Sin canciones.</td></tr>{% endfor %}</tbody></table></div></div>{% empty %}<div class="card">Sin playlists.</div>{% endfor %}</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block topbar %}Reportes MongoDB{% endblock %}
+{% block content %}
+<div class="page-header"><div><h2>Reportes y consultas avanzadas</h2><div class="hint">Evidencia para find, aggregate, $lookup e índices</div></div></div>
+{% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+<div class="grid-2">
+  <div class="card"><h3>find(): Top canciones</h3><div class="table-wrap"><table><thead><tr><th>Canción</th><th>Géneros</th><th>Reproducciones</th><th>Likes</th></tr></thead><tbody>{% for c in top_canciones %}<tr><td>{{ c.titulo_cancion }}</td><td>{% for g in c.generos %}<span class="badge gray">{{ g }}</span> {% endfor %}</td><td class="mono">{{ c.reproducciones_totales|default:0 }}</td><td class="mono">{{ c.likes_totales|default:0 }}</td></tr>{% empty %}<tr><td colspan="4">Sin datos.</td></tr>{% endfor %}</tbody></table></div></div>
+  <div class="card"><h3>aggregate(): Ventas por estado</h3><div class="table-wrap"><table><thead><tr><th>Estado</th><th>Total ventas</th><th>Monto</th></tr></thead><tbody>{% for v in ventas_estado %}<tr><td><span class="badge">{{ v.label }}</span></td><td class="mono">{{ v.total }}</td><td class="mono">{{ v.monto|floatformat:2 }}</td></tr>{% empty %}<tr><td colspan="3">Sin ventas.</td></tr>{% endfor %}</tbody></table></div></div>
+</div>
+<div class="card"><h3>$lookup: canciones relacionadas con álbumes</h3><div class="table-wrap"><table><thead><tr><th>Canción</th><th>Álbum por lookup</th><th>Artista</th><th>Géneros</th></tr></thead><tbody>{% for c in canciones_lookup %}<tr><td>{{ c.titulo_cancion }}</td><td>{{ c.album_lookup|default:'—' }}</td><td>{{ c.artista|default:'—' }}</td><td>{% for g in c.generos %}<span class="badge gray">{{ g }}</span> {% endfor %}</td></tr>{% empty %}<tr><td colspan="4">Sin resultado de lookup.</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="card"><h3>Búsqueda con índice</h3><p class="hint">El índice <span class="mono">idx_canciones_generos</span> se crea automáticamente al ingresar al dashboard/conexión.</p><div class="code">{{ explain_genero }}</div></div>
+{% endblock %}

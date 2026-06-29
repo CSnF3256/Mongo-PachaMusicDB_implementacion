@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}PachaMusicDB MongoDB{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">♫ Pacha<span>MusicDB</span></div>
+    <div class="subtitle">Implementación MongoDB · Fase 7</div>
+    <nav class="nav">
+      <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">⬢ Dashboard</a>
+      <a href="{% url 'conexion' %}" class="{% if request.resolver_match.url_name == 'conexion' %}active{% endif %}">🟢 Conexión</a>
+      <a href="{% url 'usuarios' %}" class="{% if 'usuario' in request.resolver_match.url_name %}active{% endif %}">👥 Usuarios</a>
+      <a href="{% url 'artistas' %}" class="{% if 'artista' in request.resolver_match.url_name %}active{% endif %}">🎤 Artistas</a>
+      <a href="{% url 'albumes' %}" class="{% if 'album' in request.resolver_match.url_name %}active{% endif %}">💿 Álbumes</a>
+      <a href="{% url 'canciones' %}" class="{% if 'cancion' in request.resolver_match.url_name %}active{% endif %}">🎵 Canciones</a>
+      <a href="{% url 'playlists' %}" class="{% if request.resolver_match.url_name == 'playlists' %}active{% endif %}">📚 Playlists</a>
+      <a href="{% url 'reportes' %}" class="{% if request.resolver_match.url_name == 'reportes' %}active{% endif %}">📊 Reportes</a>
+    </nav>
+    <div class="session">
+      {% if usuario_sesion %}
+        <div><strong>{{ usuario_sesion.nombre }}</strong></div>
+        <div>{{ usuario_sesion.perfil|title }}</div>
+        <div style="margin-top:10px"><a class="btn secondary small" href="{% url 'logout' %}">Cerrar sesión</a></div>
+      {% endif %}
+    </div>
+  </aside>
+  <main class="main">
+    <div class="topbar">
+      <h1>{% block topbar %}PachaMusicDB MongoDB{% endblock %}</h1>
+      <span class="tag">Solo MongoDB</span>
+    </div>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}error{% endif %}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<script>
+  document.addEventListener('submit', function(e){
+    const form = e.target;
+    if(form.dataset.confirm && !confirm(form.dataset.confirm)){ e.preventDefault(); }
+  });
+</script>
+</body>
+</html>

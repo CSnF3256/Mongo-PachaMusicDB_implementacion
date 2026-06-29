@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block topbar %}Álbumes MongoDB{% endblock %}
+{% block content %}
+<div class="page-header"><div><h2>Álbumes</h2><div class="hint">Colección <span class="mono">albumes</span> · {{ total }} documento(s)</div></div><a class="btn" href="{% url 'album_nuevo' %}">＋ Nuevo álbum</a></div>
+<div class="card"><form class="filters" method="get" style="grid-template-columns:2fr auto auto"><div class="form-group"><label>Buscar</label><input name="q" value="{{ q }}" placeholder="Nombre del álbum"></div><button class="btn">Filtrar</button><a class="btn secondary" href="{% url 'albumes' %}">Limpiar</a></form></div>
+<div class="card"><div class="table-wrap"><table><thead><tr><th>ObjectId</th><th>ID SQL</th><th>Álbum</th><th>Artista embebido</th><th>Lanzamiento</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>{% for a in albumes %}<tr><td class="mono">{{ a.id_str|slice:':10' }}…</td><td class="mono">{{ a.album_id_sql|default:'—' }}</td><td>{{ a.nombre_album }}</td><td>{{ a.artista.nombre_artista|default:'—' }}</td><td>{{ a.fecha_lanzamiento|default:'—' }}</td><td><span class="badge">{{ a.estado_album|default:'Publicado' }}</span></td><td><div class="actions"><a class="btn small secondary" href="{% url 'album_editar' a.id_str %}">Editar</a><form method="post" action="{% url 'album_eliminar' a.id_str %}" data-confirm="¿Eliminar este álbum?">{% csrf_token %}<button class="btn small danger">Eliminar</button></form></div></td></tr>{% empty %}<tr><td colspan="7">Sin álbumes.</td></tr>{% endfor %}</tbody></table></div></div>
+{% endblock %}
