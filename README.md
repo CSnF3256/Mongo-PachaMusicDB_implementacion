@@ -54,13 +54,3 @@ mongosh scripts/carga_masiva_insertmany_mongodb.js
 
 Este script usa `insertMany()` para cargar usuarios, artistas, álbumes, canciones, playlists, ventas, pagos, reproducciones e interacciones.
 
-## 6. Capturas recomendadas para el informe
-
-1. MongoDB Compass conectado a `PachaMusicDB`.
-2. Colecciones creadas y documentos cargados.
-3. Página de login verde.
-4. Dashboard con métricas de MongoDB.
-5. Pantalla de conexión exitosa.
-6. CRUD de usuarios, artistas, álbumes y canciones.
-7. Reportes con `find`, `$lookup`, agregaciones e índice.
-8. Código del archivo `core/mongo.py` mostrando la conexión.
